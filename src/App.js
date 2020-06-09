@@ -27,21 +27,25 @@ function App() {
     const response = await api.delete('repositories/'+id);
 
     if(response.status === 204){
-      const repository = await api.get('repositories');
-      setRepositories(repository.data);
+      const pos = repositories.findIndex(repository => repository.id === id);
+      
+      const lista = document.getElementsByTagName('ul');
+      
+      lista[0].childNodes[pos].remove();
     }
   }
 
   return (
     <div>
       <ul data-testid="repository-list">
-      {repositories.map(repository => 
+      {repositories.map(repository => (
           <li key={repository.id}>
             {repository.title}
               <button onClick={() => handleRemoveRepository(repository.id)}>
                 Remover
               </button>
           </li>
+          )
         )}
       </ul>
 
